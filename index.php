@@ -60,16 +60,4 @@ while($row_conselho = mysqli_fetch_assoc($resultado_cons)){
 
 }
 
-// INNER JOIN  professores AS p ON p.idProfessor = d.professorId
-// INNER JOIN  turmas AS t ON t.idTurma = d.turmaId  
-// INNER JOIN  disciplinas AS di ON di.idDisciplinas = d.disciplinaId;
-
-
-	//  echo "ID: " . $row_usuario['idDistribuicao'] . "<br>";
-	// echo "Data: " . $row_usuario['data']. "<br>";
-   
-	// echo "nome do(a) Professor(a) " . $row_usuario['nomeProfessor'] . "<br>" ;
-
-    // echo "nomenclatura " . $row_usuario['turno'] . "<br> " ;
-
-	// echo "disciplina " . $row_usuario['nomeDisciplina'] . "<br>  <hr>" ;
+?>
