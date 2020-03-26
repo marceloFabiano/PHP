@@ -20,18 +20,18 @@ INNER JOIN  disciplinas AS di ON di.idDisciplinas = d.disciplinaId";
 
 $resultado_dist = mysqli_query($conn, $result_dist);
 
-// while($row_usuario = mysqli_fetch_assoc($resultado_dist)){
+while($row_usuario = mysqli_fetch_assoc($resultado_dist)){
 
-// 	echo "ID: " . $row_usuario['idDistribuicao'] . "<br>";
-// 	echo "Data: " . $row_usuario['data']. "<br>";
+	echo "ID: " . $row_usuario['idDistribuicao'] . "<br>";
+	echo "Data: " . $row_usuario['data']. "<br>";
    
-// 	echo "nome do(a) Professor(a) " . $row_usuario['nomeProfessor'] . "<br>" ;
+	echo "nome do(a) Professor(a) " . $row_usuario['nomeProfessor'] . "<br>" ;
 
-//     echo "nomenclatura " . $row_usuario['turno'] . "<br> " ;
+    echo "nomenclatura " . $row_usuario['turno'] . "<br> " ;
 
-// 	 echo "disciplina " . $row_usuario['nomeDisciplina'] . "<br>  <hr>" ;
+	 echo "disciplina " . $row_usuario['nomeDisciplina'] . "<br>  <hr>" ;
 
-// }
+}
 
 
 echo "<h2> Conselho </h2>";
