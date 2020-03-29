@@ -6,52 +6,61 @@ class Update extends Conexao
 {
     private $Tabela;
     private $Dados;
-    private $Query;
-    private $Conn;
-    private $Resultado;
     private $Termos;
-    private $Values;
+    private $Conn;
+    private $Query;
+    
 
-    function getResultado()
-    {
-        return $this->Resultado;
-    }
+    public function executeUpdate($Tabela,$Dados, $Termos)
+    {        
+        //atribuição dos parâmetros recebidos aos atributos da classe
+         $this->Tabela = (string) $Tabela;
+         $this->Dados =  $Dados;   
+         $this->Termos = (string) $Termos;
+  
+         //cria a Query
+         $this->getIntrucao();
 
-    public function exeUpdate($Tabela, array $Dados, $Termos = null, $ParseString = null)
-    {
-                
-        $this->Tabela = (string) $Tabela;
-        $this->Dados = $Dados;
-        $this->Termos = (string) $Termos;
-        parse_str($ParseString, $this->Values);
-        $this->getIntrucao();
-        $this->executarInstrucao();
+         //Executa as instruções
+         $this->executarInstrucao();
     }
 
     private function getIntrucao()
-    {
+    {  
         foreach ($this->Dados as $key => $Value) {
-            $Values[] = $key . '= :' . $key;
+            $Values[] = $key . '=:' . $key;        
         }
-        $Values = implode(', ', $Values);
-        echo $this->Query = "UPDATE {$this->Tabela} SET {$Values} {$this->Termos}";
+         $Values = implode(', ', $Values);       
+         $this->Query = "UPDATE {$this->Tabela} SET {$Values} {$this->Termos}";         
     }
 
     private function executarInstrucao()
     {
-        $this->conexao();
         try {
-            $this->Query->execute(array_merge($this->Dados, $this->Values));
+            
+            //abre conexão com o banco
+            $this-> conexao();
+            //prepara a Query
+            $stmt = $this->Conn->prepare($this->Query);
+           //Executa passando como paâmetro os dados recebidos
+            $stmt -> execute($this->Dados);
             $this->Resultado = true;
+
         } catch (Exception $ex) {
+
             $this->Resultado = false;
         }
+       
     }
 
     private function conexao()
     {
         $this->Conn = parent::getConn();
-        $this->Query = $this->Conn->prepare($this->Query);
+    }
+ 
+    function getResultado()
+    {
+        return $this->Resultado;
     }
 }
   

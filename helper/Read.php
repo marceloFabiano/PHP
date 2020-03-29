@@ -11,13 +11,7 @@ class Read extends Conexao
     private $Query;
     private $Conn;
     private $Item;
-    private $email;
 
-
-    function getResultado()
-    {
-        return $this->Resultado;
-    }
 
     public function exeRead($Tabela, $Termos = null, $ParseString = null)
     {     
@@ -26,6 +20,7 @@ class Read extends Conexao
         }
         $this->Select = "SELECT * FROM {$Tabela} {$Termos}";
         $this->exeInstrucao();
+        return $this->Resultado;
     }
 
     public function buscaComTermos($Query,$item, $ParseString = null)

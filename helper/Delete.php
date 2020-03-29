@@ -1,54 +1,51 @@
 <?php
 
+if(!defined('URL')){
+    header("Location: ../formulario.html");
+    exit();
+ }
     require_once ('Conexao.php');
 
     class Delete extends Conexao
     {
             private $id;
             private $Tabela;
-            private $Query;
-            private $Conn;
             private $Termos;
-            private $Values;
+            private $Query;
+            private $PDO;
    
 
-                public function exeDelete($Tabela, $id, $Termos=null, $ParseString = null)
-                {
-                    $this->Tabela = (string) $Tabela;
-                    $this->id = $id;
-                    $this-> $Termos =(string) $Termos;
-                    parse_str($ParseString, $this->Values);
-                    $this->getIntrucao();
-                    $this->executarInstrucao();
+                public function executeDelete($Tabela,$Termos,$id)
+                {                   
+                  //atribuição dos parâmetros recebidos aos atributos da classe
+                   $this->Tabela = (string) $Tabela;
+                   $this->Termos = $Termos;
+                   $this->id = (array) $id;
+
+                   //cria Query
+                   $this->getIntrucao();              
+                   $this->executarInstrucao();
                 }
 
                 private function getIntrucao()
                 {
-                    $this -> Values = 'id= :id';
-                    $this->Query = "DELETE FROM {$this->Tabela} WHERE {$this->Values}";
-                    echo "Query  : ". $this-> Query;
+                    $this->Query = "DELETE FROM {$this->Tabela} WHERE {$this->Termos}";                
                 }
 
                 private function executarInstrucao()
                 {
-                        $this->conexao();
-
-                    try { 
-
-                        $this-> Query-> bindParam(':id', $this->id);                      
-                        $this-> Query->execute();
-
+                     try {                      
+                        $this->conexao();                       
+                         $stmt = $this->PDO->prepare($this->Query);
+                         $stmt -> execute($this->id);             
+  
                     } catch (Exception $ex) {
                         echo "Não foi possível inserir a questão";
                     }
 
                 }
-
                 private function conexao()
                 {
-                    $this->Conn = parent::getConn();
-                    $this->Query = $this->Conn->prepare($this->Query);
+                    $this->PDO = parent::getConn();
                 }
     }
-
-?>
